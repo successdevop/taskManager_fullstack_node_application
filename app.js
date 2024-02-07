@@ -4,6 +4,8 @@ const app = express();
 // imports required
 const database = require("./database/taskdb");
 const router = require("./routes/taskRoute");
+const notFound = require("./middleware/notFoundRoute");
+const errorHandler = require("./middleware/customErrors");
 require("dotenv").config();
 
 // ==> Middle-wares <==
@@ -11,6 +13,10 @@ require("dotenv").config();
 app.use(express.json());
 // route router
 app.use("/api/v1/tasks", router);
+// route not found path
+app.use(notFound);
+// error handling middleware
+app.use(errorHandler);
 
 // server listening port
 const port = process.env.PORT || 5000;
